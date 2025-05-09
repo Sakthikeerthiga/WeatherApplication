@@ -1,0 +1,76 @@
+.spinner-border {
+  width: 1rem;
+  height: 1rem;
+}
+
+.btn-primary {
+  background: #1883ff;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: 500;
+  font-size: 1.1rem;
+  padding: 10px 32px;
+  box-shadow: 0 2px 8px rgba(24, 131, 255, 0.08);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+
+.btn-primary:active,
+.btn-primary:focus {
+  background: #0f6cd6;
+  color: #fff;
+  outline: none;
+  box-shadow: 0 0 0 2px #b3d4fc;
+}
+
+.btn-primary:disabled {
+  background: #b3d4fc;
+  color: #fff;
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.back-link {
+  background: none;
+  border: none;
+  color: #1883ff;
+  font-size: 1.15rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+  float: right;
+}
+
+.back-link:hover,
+.back-link:focus {
+  color: #0f6cd6;
+}
+
+.arrow {
+  font-size: 1.2em;
+  margin-right: 4px;
+  line-height: 1;
+}
+
+.weather-form-card {
+  max-width: 700px;
+  margin: 2.5rem auto 0 auto;
+  padding: 2.5rem 2rem 2rem 2rem;
+  box-sizing: border-box;
+}
+
+/* City suggestion styles */
+.list-group-item {
+  cursor: pointer;
+}
+
+.form-control {
+  cursor: text;
+}
+
+.list-group-item:hover {
+  background-color: #f8f9fa;
+} 
