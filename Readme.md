@@ -113,11 +113,7 @@ This application allows users to:
    ```bash
    npm run dev
    ```
-## Unit Test
-Perform unit test
-php bin/phpunit tests/Service/OpenMeteoServiceTest.php  
 
-php bin/phpunit
 
 ## API Usage
 

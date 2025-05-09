@@ -6,11 +6,7 @@ use App\Repository\WeatherEntryRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: WeatherEntryRepository::class)]
-#[ORM\Table(
-    uniqueConstraints: [
-        new ORM\UniqueConstraint(name: "city_country_date_unique", columns: ["city", "country", "date"])
-    ]
-)]
+#[ORM\UniqueConstraint(name: "city_country_date_unique", columns: ["city", "country", "date"])]
 class WeatherEntry
 {
     #[ORM\Id]
@@ -87,11 +83,11 @@ class WeatherEntry
     public function getSunset(): ?\DateTimeInterface { return $this->sunset; }
     public function setSunset(?\DateTimeInterface $sunset): self { $this->sunset = $sunset; return $this; }
     public function getHourlyData(): ?array { return $this->hourlyData; }
-    public function setHourlyData(?array $data): self { $this->hourlyData = $data; return $this; }
+    public function setHourlyData(?array $hourlyData): self { $this->hourlyData = $hourlyData; return $this; }
     public function getHumidity(): ?float { return $this->humidity; }
     public function setHumidity(?float $humidity): self { $this->humidity = $humidity; return $this; }
-    public function getDailyForecast(): ?array{return $this->dailyForecast;}
-    public function setDailyForecast(?array $dailyForecast): self{$this->dailyForecast = $dailyForecast;return $this;}
+    public function getDailyForecast(): ?array { return $this->dailyForecast; }
+    public function setDailyForecast(?array $dailyForecast): self { $this->dailyForecast = $dailyForecast; return $this; }
     public function getUpdatedAt(): ?\DateTimeInterface { return $this->updatedAt; }
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self { $this->updatedAt = $updatedAt; return $this; }
 
@@ -115,17 +111,16 @@ class WeatherEntry
             'country' => $this->getCountry(),
             'latitude' => $this->getLatitude(),
             'longitude' => $this->getLongitude(),
-            'date' => $this->getDate() ? $this->getDate()->format('Y-m-d') : null,
+            'date' => $this->getDate()->format('Y-m-d\TH:i:s'),
             'temperature' => $this->getTemperature(),
             'precipitation' => $this->getPrecipitation(),
             'windSpeed' => $this->getWindSpeed(),
-            'humidity' => $this->getHumidity(),
             'weathercode' => $this->getWeathercode(),
             'sunrise' => $this->getSunrise() ? $this->getSunrise()->format('Y-m-d\TH:i:s') : null,
             'sunset' => $this->getSunset() ? $this->getSunset()->format('Y-m-d\TH:i:s') : null,
             'hourly_data' => $this->getHourlyData(),
+            'humidity' => $this->getHumidity(),
             'daily_forecast' => $this->getDailyForecast(),
-            'updatedAt' => $this->getUpdatedAt() ? $this->getUpdatedAt()->format('Y-m-d\TH:i:s') : null,
         ];
     }
 }
