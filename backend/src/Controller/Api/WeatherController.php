@@ -27,15 +27,20 @@ class WeatherController extends AbstractController
 
         $qb = $repo->createQueryBuilder('w');
         if ($q) {
-            $qb->andWhere('LOWER(w.city) LIKE :q')
-               ->setParameter('q', '%' . strtolower($q) . '%');
+            $qb->andWhere('LOWER(w.city) LIKE LOWER(:q)')
+               ->setParameter('q', '%' . $q . '%');
         }
         if ($date) {
-            $start = new \DateTime($date);
-            $end = (clone $start)->modify('+1 day');
-            $qb->andWhere('w.date >= :start AND w.date < :end')
-               ->setParameter('start', $start->format('Y-m-d 00:00:00'))
-               ->setParameter('end', $end->format('Y-m-d 00:00:00'));
+            try {
+                $start = new \DateTime($date);
+                $start->setTime(0, 0, 0);
+                $end = (clone $start)->modify('+1 day');
+                $qb->andWhere('w.date >= :start AND w.date < :end')
+                   ->setParameter('start', $start)
+                   ->setParameter('end', $end);
+            } catch (\Exception $e) {
+                // If date is invalid, ignore the filter
+            }
         }
         if ($country) {
             $qb->andWhere('w.country = :country')
@@ -53,15 +58,20 @@ class WeatherController extends AbstractController
 
         $countQb = $repo->createQueryBuilder('w');
         if ($q) {
-            $countQb->andWhere('LOWER(w.city) LIKE :q')
-                    ->setParameter('q', '%' . strtolower($q) . '%');
+            $countQb->andWhere('LOWER(w.city) LIKE LOWER(:q)')
+                    ->setParameter('q', '%' . $q . '%');
         }
         if ($date) {
-            $start = new \DateTime($date);
-            $end = (clone $start)->modify('+1 day');
-            $countQb->andWhere('w.date >= :start AND w.date < :end')
-                    ->setParameter('start', $start->format('Y-m-d 00:00:00'))
-                    ->setParameter('end', $end->format('Y-m-d 00:00:00'));
+            try {
+                $start = new \DateTime($date);
+                $start->setTime(0, 0, 0);
+                $end = (clone $start)->modify('+1 day');
+                $countQb->andWhere('w.date >= :start AND w.date < :end')
+                        ->setParameter('start', $start)
+                        ->setParameter('end', $end);
+            } catch (\Exception $e) {
+                // If date is invalid, ignore the filter
+            }
         }
         $total = (int)$countQb->select('COUNT(w.id)')->getQuery()->getSingleScalarResult();
 
